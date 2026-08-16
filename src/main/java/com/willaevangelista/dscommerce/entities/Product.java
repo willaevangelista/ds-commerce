@@ -31,6 +31,9 @@ public class Product implements Serializable {
                 inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
 
+    @OneToMany(mappedBy = "id.product")
+    private Set<OrderItem> items = new HashSet<>();
+
     public Product() {}
 
     public Product(Long id, String name, String description, Double price, String imgURL, Set<Category> categories) {
@@ -80,6 +83,10 @@ public class Product implements Serializable {
 
     public Set<Category> getCategories() {
         return categories;
+    }
+
+    public Set<OrderItem> getItems() {
+        return items;
     }
 
     @Override
