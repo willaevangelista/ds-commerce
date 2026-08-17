@@ -1,13 +1,13 @@
 package com.willaevangelista.dscommerce.services;
 
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
 import com.willaevangelista.dscommerce.dto.ProductDTO;
 import com.willaevangelista.dscommerce.entities.Product;
-import com.willaevangelista.dscommerce.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
+import com.willaevangelista.dscommerce.repositories.ProductRepository;
 
 @Service
 public class ProductService {
@@ -19,5 +19,11 @@ public class ProductService {
     public ProductDTO findAById(Long id) {
         Product product = productRepository.findById(id).get();
         return new ProductDTO(product);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ProductDTO> findAll(Pageable pageable) {
+        Page<Product> result = productRepository.findAll(pageable);
+        return result.map(ProductDTO::new);
     }
 }
