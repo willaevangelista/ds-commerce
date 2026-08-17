@@ -1,0 +1,22 @@
+package com.willaevangelista.dscommerce.controllers;
+
+import com.willaevangelista.dscommerce.dto.ProductDTO;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.willaevangelista.dscommerce.services.ProductService;
+
+@RestController
+@RequestMapping(value = "/products")
+public class ProductController {
+
+    @Autowired
+    private ProductService productService;
+
+    @GetMapping(value = "/{id}")
+    public ProductDTO findById(@PathVariable Long id) {
+        return productService.findAById(id);
+    }
+}
