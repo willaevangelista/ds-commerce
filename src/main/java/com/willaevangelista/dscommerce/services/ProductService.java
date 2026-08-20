@@ -1,12 +1,15 @@
 package com.willaevangelista.dscommerce.services;
 
+import com.willaevangelista.dscommerce.services.exceptions.DatabaseException;
 import com.willaevangelista.dscommerce.services.exceptions.ResourceNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 import com.willaevangelista.dscommerce.dto.ProductDTO;
 import com.willaevangelista.dscommerce.entities.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.willaevangelista.dscommerce.repositories.ProductRepository;
 
@@ -50,9 +53,17 @@ public class ProductService {
 
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.SUPPORTS)
     public void delete(Long id) {
-        productRepository.deleteById(id);
+        if (!productRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Resource not found");
+        }
+
+        try {
+            productRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Referential integrity violation");
+        }
     }
 
     private void copyDtoToEntity(ProductDTO productDTO, Product entity) {
