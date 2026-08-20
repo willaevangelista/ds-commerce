@@ -1,5 +1,6 @@
 package com.willaevangelista.dscommerce.services;
 
+import com.willaevangelista.dscommerce.services.exceptions.ResourceNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +18,8 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public ProductDTO findAById(Long id) {
-        Product product = productRepository.findById(id).get();
+        Product product = productRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Resource not found"));
         return new ProductDTO(product);
     }
 
@@ -46,6 +48,11 @@ public class ProductService {
 
         return new ProductDTO(entity);
 
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        productRepository.deleteById(id);
     }
 
     private void copyDtoToEntity(ProductDTO productDTO, Product entity) {
