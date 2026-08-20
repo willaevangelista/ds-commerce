@@ -3,9 +3,12 @@ package com.willaevangelista.dscommerce.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.validation.FieldError;
 import com.willaevangelista.dscommerce.dto.CustomError;
+import com.willaevangelista.dscommerce.dto.ValidationError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import com.willaevangelista.dscommerce.services.exceptions.DatabaseException;
 import com.willaevangelista.dscommerce.services.exceptions.ResourceNotFoundException;
 
@@ -25,6 +28,19 @@ public class ControllerExceptionHandler {
     public ResponseEntity<CustomError> database(DatabaseException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         CustomError error = new CustomError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(error);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<CustomError> methodArgumentNotValidation(MethodArgumentNotValidException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.UNPROCESSABLE_CONTENT;
+        ValidationError error = new ValidationError(Instant.now(), status.value(), "Invalid data",
+                request.getRequestURI());
+
+        for (FieldError fieldError : e.getBindingResult().getFieldErrors()) {
+            error.addError(fieldError.getField(), fieldError.getDefaultMessage());
+        }
+
         return ResponseEntity.status(status).body(error);
     }
 }
