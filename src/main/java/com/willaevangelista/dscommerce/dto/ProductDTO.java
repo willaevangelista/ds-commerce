@@ -2,13 +2,20 @@ package com.willaevangelista.dscommerce.dto;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.willaevangelista.dscommerce.entities.Product;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 @JsonPropertyOrder({"id", "name", "description", "price", "imgUrl"})
 public class ProductDTO {
 
     private Long id;
+    @Size(min = 3, max = 80, message = "Name must be between 3 and 80 characters")
+    @NotBlank(message = "Field name is required")
     private String name;
+    @Size(min = 10, message = "Description must have at least 3 characters")
     private String description;
+    @Positive(message = "Price must be a positive number")
     private Double price;
     private String imgUrl;
 
