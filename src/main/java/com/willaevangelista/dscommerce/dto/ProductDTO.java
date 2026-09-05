@@ -14,6 +14,7 @@ public class ProductDTO {
     @NotBlank(message = "Field name is required")
     private String name;
     @Size(min = 10, message = "Description must have at least 3 characters")
+    @NotBlank(message = "Field description is required")
     private String description;
     @Positive(message = "Price must be a positive number")
     private Double price;
