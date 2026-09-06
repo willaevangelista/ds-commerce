@@ -1,5 +1,6 @@
 package com.willaevangelista.dscommerce.services;
 
+import com.willaevangelista.dscommerce.dto.ProductMinDTO;
 import com.willaevangelista.dscommerce.services.exceptions.DatabaseException;
 import com.willaevangelista.dscommerce.services.exceptions.ResourceNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -27,9 +28,9 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ProductDTO> findAll(String name, Pageable pageable) {
+    public Page<ProductMinDTO> findAll(String name, Pageable pageable) {
         Page<Product> result = productRepository.searchByName(name, pageable);
-        return result.map(ProductDTO::new);
+        return result.map(ProductMinDTO::new);
     }
 
     @Transactional

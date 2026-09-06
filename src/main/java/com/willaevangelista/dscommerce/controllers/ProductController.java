@@ -1,5 +1,6 @@
 package com.willaevangelista.dscommerce.controllers;
 
+import com.willaevangelista.dscommerce.dto.ProductMinDTO;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +27,8 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ProductDTO>> findAll(@RequestParam(name = "name", defaultValue = "") String name, Pageable pageable) {
+    public ResponseEntity<Page<ProductMinDTO>> findAll(@RequestParam(name = "name", defaultValue = "") String name,
+                                                       Pageable pageable) {
         return ResponseEntity.ok(productService.findAll(name, pageable));
     }
 
