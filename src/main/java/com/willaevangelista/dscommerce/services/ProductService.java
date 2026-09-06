@@ -1,6 +1,8 @@
 package com.willaevangelista.dscommerce.services;
 
+import com.willaevangelista.dscommerce.dto.CategoryDTO;
 import com.willaevangelista.dscommerce.dto.ProductMinDTO;
+import com.willaevangelista.dscommerce.entities.Category;
 import com.willaevangelista.dscommerce.services.exceptions.DatabaseException;
 import com.willaevangelista.dscommerce.services.exceptions.ResourceNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -76,5 +78,11 @@ public class ProductService {
         entity.setDescription(productDTO.getDescription());
         entity.setPrice(productDTO.getPrice());
         entity.setImgURL(productDTO.getImgUrl());
+        entity.getCategories().clear();
+        for (CategoryDTO categoryDTO : productDTO.getCategories()) {
+            Category category = new Category();
+            category.setId(categoryDTO.getId());
+            entity.getCategories().add(category);
+        }
     }
 }

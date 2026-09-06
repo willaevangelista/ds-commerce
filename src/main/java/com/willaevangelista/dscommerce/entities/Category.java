@@ -47,6 +47,10 @@ public class Category implements Serializable {
         return products;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Category category)) return false;
