@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.willaevangelista.dscommerce.entities.Order;
 import com.willaevangelista.dscommerce.entities.OrderItem;
 import com.willaevangelista.dscommerce.entities.OrderStatus;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -19,7 +20,10 @@ public class OrderDTO {
     private ClientDTO client;
     private PaymentDTO payment;
 
+    @NotEmpty(message = "Items list must have at least one item")
     private List<OrderItemDTO> items = new ArrayList<>();
+
+    public OrderDTO () {}
 
     public OrderDTO(Long id, Instant moment, OrderStatus status, ClientDTO client, PaymentDTO payment) {
         this.id = id;
