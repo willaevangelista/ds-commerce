@@ -3,10 +3,7 @@ package com.willaevangelista.dscommerce.dto;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.willaevangelista.dscommerce.entities.Category;
 import com.willaevangelista.dscommerce.entities.Product;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +18,7 @@ public class ProductDTO {
     @Size(min = 10, message = "Description must have at least 3 characters")
     @NotBlank(message = "Field description is required")
     private String description;
+    @NotNull(message = "Field price is required")
     @Positive(message = "Price must be a positive number")
     private Double price;
     private String imgUrl;
