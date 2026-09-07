@@ -59,14 +59,13 @@ INSERT INTO tb_user (name, email, phone, password, birth_date) VALUES ('Maria Br
 INSERT INTO tb_user (name, email, phone, password, birth_date) VALUES ('Alex Green', 'alex@gmail.com', '977777777', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG', '1987-12-13');
 INSERT INTO tb_user (name, email, phone, password, birth_date) VALUES ('Ana Blue', 'ana@gmail.com', '955555555', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG', '1987-12-13');
 
-INSERT INTO tb_role (authority) VALUES ('ROLE_OPERATOR');
-INSERT INTO tb_role (authority) VALUES ('ROLE_ADMIN');
 INSERT INTO tb_role (authority) VALUES ('ROLE_CLIENT');
+INSERT INTO tb_role (authority) VALUES ('ROLE_ADMIN');
 
 INSERT INTO tb_user_role (user_id, role_id) VALUES (1,1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (2,1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (2,2);
-INSERT INTO tb_user_role (user_id, role_id) VALUES (3,3);
+INSERT INTO tb_user_role (user_id, role_id) VALUES (3,1);
 
 INSERT INTO tb_order (moment, status, client_id) VALUES (TIMESTAMP WITH TIME ZONE '2022-07-25T13:00:00Z', 1, 1);
 INSERT INTO tb_order (moment, status, client_id) VALUES (TIMESTAMP WITH TIME ZONE '2022-07-29T15:50:00Z', 3, 2);

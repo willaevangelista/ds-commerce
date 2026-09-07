@@ -1,5 +1,6 @@
 package com.willaevangelista.dscommerce.controllers;
 
+import com.willaevangelista.dscommerce.services.exceptions.ForbiddenException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,6 +42,13 @@ public class ControllerExceptionHandler {
             error.addError(fieldError.getField(), fieldError.getDefaultMessage());
         }
 
+        return ResponseEntity.status(status).body(error);
+    }
+
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<CustomError> forbidden(ForbiddenException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.FORBIDDEN;
+        CustomError error = new CustomError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(error);
     }
 }
