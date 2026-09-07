@@ -49,11 +49,11 @@ public class Order implements Serializable {
         return id;
     }
 
-    public Instant getInstant() {
+    public Instant getMoment() {
         return moment;
     }
 
-    public void setInstant(Instant moment) {
+    public void setMoment(Instant moment) {
         this.moment = moment;
     }
 
